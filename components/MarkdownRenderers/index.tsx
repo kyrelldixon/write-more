@@ -5,6 +5,7 @@ import ParagraphRenderer from './ParagraphRender'
 import HorizontalRuleRenderer from './HorizontalRuleRenderer'
 import BlockQuoteRenderer from './BlockQuoteRenderer'
 import InlineCodeRenderer from './InlineCodeRenderer'
+import CodeBlockRenderer from './CodeBlockRenderer'
 
 export default {
   heading: HeadingRenderer,
@@ -14,4 +15,5 @@ export default {
   thematicBreak: HorizontalRuleRenderer,
   blockquote: BlockQuoteRenderer,
   inlineCode: InlineCodeRenderer,
+  code: CodeBlockRenderer,
 }
