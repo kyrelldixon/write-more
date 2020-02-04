@@ -6,6 +6,7 @@ import HorizontalRuleRenderer from './HorizontalRuleRenderer'
 import BlockQuoteRenderer from './BlockQuoteRenderer'
 import InlineCodeRenderer from './InlineCodeRenderer'
 import CodeBlockRenderer from './CodeBlockRenderer'
+import tableRenderers from './TableRenderer'
 
 export default {
   heading: HeadingRenderer,
@@ -16,4 +17,5 @@ export default {
   blockquote: BlockQuoteRenderer,
   inlineCode: InlineCodeRenderer,
   code: CodeBlockRenderer,
+  ...tableRenderers,
 }
