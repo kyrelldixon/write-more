@@ -1,5 +1,7 @@
 import HeadingRenderer from './HeadingRenderer'
+import ListRenderer from './ListRenderer'
 
 export default {
-  heading: HeadingRenderer
+  heading: HeadingRenderer,
+  list: ListRenderer,
 }
