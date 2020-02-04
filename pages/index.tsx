@@ -93,91 +93,12 @@ Some text to show that the reference links can follow later.
 
 ## Images
 
-<div className="Image__Small">
-  <img
-    src="./images/article-image-2.jpg"
-    title="Logo Title Text 1"
-    alt="Alt text"
-  />
-</div>
-
-<figcaption>This is an image.</figcaption>
+\`\`\`
+# REMOVE IMAGE FROM CODE BLOCK TO DISPLAY
+![alt text](https://source.unsplash.com/1600x900 "Random Image from unsplash.com")
+\`\`\`
 
 Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum. Lorem Ipsum is simply dummy text of the printing and typesetting industry.
-
-## Code and Syntax Highlighting
-
-\`\`\`javascript
-var s = "JavaScript syntax highlighting";
-alert(s);
-\`\`\`
-
-\`\`\`
-No language indicated, so no syntax highlighting.
-But let's throw in a <b>tag</b>.
-\`\`\`
-
-### React Live
-
-\`\`\`js live
-const onClick = () => {
-  alert("You opened me");
-};
-render(<button onClick={onClick}>Click to Open</button>);
-\`\`\`
-
-### JSX
-
-\`\`\`jsx
-import React from "react";
-import { ThemeProvider } from "theme-ui";
-import theme from "./theme";
-
-export default props => (
-  <ThemeProvider theme={theme}>{props.children}</ThemeProvider>
-);
-\`\`\`
-
-### Code Block with Line Highlighting
-
-\`\`\`jsx {5-7,10}
-import React from "react";
-
-const Post = ({ data: { post } }) => (
-  <Layout>
-    <Heading variant="h2" as="h2">
-      {post.title}
-    </Heading>
-    <p
-      sx={{
-        color: \`secondary\`,
-        mt: 3,
-        a: { color: \`secondary\` },
-        fontSize: [1, 1, 2]
-      }}
-    >
-      <span>{post.date}</span>
-      {post.tags && (
-        <React.Fragment>
-          {\` — \`}
-          <ItemTags tags={post.tags} />
-        </React.Fragment>
-      )}
-    </p>
-    <section
-      sx={{
-        ...CodeStyles,
-        my: 5,
-        ".gatsby-resp-image-wrapper": { my: 5, boxShadow: \`lg\` }
-      }}
-    >
-      <MDXRenderer>{post.body}</MDXRenderer>
-    </section>
-  </Layout>
-);
-
-export default Post;
-\`\`\`
 
 ## Blockquotes
 
@@ -196,18 +117,13 @@ Three or more...
 
 ---
 
-Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum
+Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.
+
+It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum
 
 ---
 
 Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum
-
-## Tables
-| Feature   | Support |
-| --------- | ------- |
-| tables    | ✔ |
-| alignment | ✔ |
-| wewt      | ✔ |
 `
 
 const IndexPage: NextPage = () => {
