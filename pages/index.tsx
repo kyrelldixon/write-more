@@ -1,9 +1,10 @@
 import React, { useState } from 'react'
-import Layout from '../components/Layout'
-import { NextPage } from 'next'
 import dynamic from 'next/dynamic'
-import { Controlled as CodeMirror } from 'react-codemirror2'
 import ReactMarkdown from 'react-markdown'
+import { NextPage } from 'next'
+import { Controlled as CodeMirror } from 'react-codemirror2'
+
+import Layout from '../components/Layout'
 
 /* 
   dynamically import codemirror only on client
