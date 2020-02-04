@@ -7,9 +7,9 @@ type Props = {
 
 const Layout: React.FunctionComponent<Props> = ({
   children,
-  title = 'This is the default title',
+  title = 'Write More',
 }) => (
-  <div>
+  <div className="text-gray-900">
     <Head>
       <title>{title}</title>
       <meta charSet="utf-8" />
