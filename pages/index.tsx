@@ -56,7 +56,7 @@ const IndexPage: NextPage = () => {
             </button>
           </div>
           {
-            isPreviewMode ? 
+            !isPreviewMode ? 
             <CodeMirror
             options={codeMirrorOptions}
             value={text}
