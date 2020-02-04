@@ -9,8 +9,7 @@ type ListProps = {
   ordered: number
 }
 
-const ListRenderer: React.FC<ListProps> = ({ children, ordered, ...rest }) => {
-  console.log({...rest})
+const ListRenderer: React.FC<ListProps> = ({ children, ordered }) => {
   return ordered ?
     <Ol>{children}</Ol> :
     <Ul>{children}</Ul>
