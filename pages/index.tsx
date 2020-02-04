@@ -5,6 +5,7 @@ import { NextPage } from 'next'
 import { Controlled as CodeMirror } from 'react-codemirror2'
 
 import Layout from '../components/Layout'
+import renderers from '../components/MarkdownRenderers'
 
 /* 
   dynamically import codemirror only on client
@@ -251,7 +252,7 @@ const IndexPage: NextPage = () => {
               setText(value)
             }}
             /> :
-            <ReactMarkdown source={text} />
+            <ReactMarkdown source={text} renderers={renderers} />
           }
         </main>
         <footer className="flex justify-end">Word Count: 0</footer>
