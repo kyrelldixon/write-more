@@ -10,7 +10,6 @@ type HeaderProps = {
 }
 
 const HeadingRenderer: React.FC<HeaderProps> = ({ level, children }) => {
-  console.log(level)
   let Component = H1
   switch (level) {
     case 1:
