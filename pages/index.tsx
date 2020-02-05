@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import dynamic from 'next/dynamic'
 import ReactMarkdown from 'react-markdown'
 import { NextPage } from 'next'
@@ -7,6 +7,7 @@ import Layout from '../components/Layout'
 import Editor from '../components/Editor'
 import renderers from '../components/MarkdownRenderers'
 import { styleGuideText } from '../constants'
+import { getWordCountFromMarkdown } from '../utils'
 
 /* 
   dynamically import codemirror only on client
@@ -20,6 +21,7 @@ dynamic(() => {
 const IndexPage: NextPage = () => {
   const [text, setText] = useState(styleGuideText)
   const [isPreviewMode, setIsPreviewMode] = useState(false)
+  const [wordCount, setWordCount] = useState(0)
   const togglePreviewMode = () => setIsPreviewMode(!isPreviewMode)
   const formatDate = () => {
     const today = new Date()
@@ -27,6 +29,11 @@ const IndexPage: NextPage = () => {
 
     return today.toLocaleDateString("en-US", options)
   }
+
+  useEffect(() => {
+    const count = getWordCountFromMarkdown(text)
+    setWordCount(count)
+  }, [text])
 
   return (
     <Layout title="Home | Write More">
@@ -50,7 +57,7 @@ const IndexPage: NextPage = () => {
             <ReactMarkdown source={text} renderers={renderers} />
           }
         </main>
-        <footer className="flex justify-end">Word Count: 0</footer>
+        <footer className="flex justify-end">Word Count: {wordCount}</footer>
       </div>
     </Layout>
   )
