@@ -7,7 +7,6 @@ import Layout from '../components/Layout'
 import Editor from '../components/Editor'
 import Link from '../components/Link'
 import renderers from '../components/MarkdownRenderers'
-import { styleGuideText } from '../constants'
 import { useLiveWordCount } from '../hooks'
 import { todaysDateFormatted } from '../utils';
 
@@ -21,7 +20,7 @@ dynamic(() => {
 }, { ssr: false })
 
 const IndexPage: NextPage = () => {
-  const [text, setText] = useState(styleGuideText)
+  const [text, setText] = useState('')
   const [isPreviewMode, setIsPreviewMode] = useState(false)
   const wordCount = useLiveWordCount(text)
   const togglePreviewMode = () => setIsPreviewMode(!isPreviewMode)
