@@ -20,7 +20,6 @@ dynamic(() => {
 // from https://github.com/taniarascia/takenote/blob/master/src/client/slices/settings.ts
 const codeMirrorOptions = {
   mode: 'gfm',
-  theme: 'base16-light',
   lineNumbers: false,
   lineWrapping: true,
   viewportMargin: Infinity,
