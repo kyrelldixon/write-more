@@ -1,5 +1,4 @@
 import React, { useState } from 'react'
-import dynamic from 'next/dynamic'
 import ReactMarkdown from 'react-markdown'
 import { NextPage } from 'next'
 
@@ -9,15 +8,6 @@ import Link from '../components/Link'
 import renderers from '../components/MarkdownRenderers'
 import { useLiveWordCount } from '../hooks'
 import { todaysDateFormatted } from '../utils';
-
-/* 
-  dynamically import codemirror only on client
-  since it looks for 'navigator' to render which
-  is only in the browser
-*/
-dynamic(() => {
-  return import('codemirror/mode/gfm/gfm')
-}, { ssr: false })
 
 const IndexPage: NextPage = () => {
   const [text, setText] = useState('')
