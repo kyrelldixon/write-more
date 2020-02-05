@@ -2,9 +2,9 @@ import React, { useState } from 'react'
 import dynamic from 'next/dynamic'
 import ReactMarkdown from 'react-markdown'
 import { NextPage } from 'next'
-import { Controlled as CodeMirror } from 'react-codemirror2'
 
 import Layout from '../components/Layout'
+import Editor from '../components/Editor'
 import renderers from '../components/MarkdownRenderers'
 import { styleGuideText } from '../constants'
 
@@ -16,16 +16,6 @@ import { styleGuideText } from '../constants'
 dynamic(() => {
   return import('codemirror/mode/gfm/gfm')
 }, { ssr: false })
-
-// from https://github.com/taniarascia/takenote/blob/master/src/client/slices/settings.ts
-const codeMirrorOptions = {
-  mode: 'gfm',
-  lineNumbers: false,
-  lineWrapping: true,
-  viewportMargin: Infinity,
-  keyMap: 'default',
-  dragDrop: false,
-}
 
 const IndexPage: NextPage = () => {
   const [text, setText] = useState(styleGuideText)
@@ -56,21 +46,7 @@ const IndexPage: NextPage = () => {
           </div>
           {
             !isPreviewMode ?
-            <div className="text-lg">
-              <CodeMirror
-              options={codeMirrorOptions}
-              value={text}
-              editorDidMount={editor => {
-                setTimeout(() => {
-                  editor.focus()
-                }, 0)
-                editor.setCursor(0)
-              }}
-              onBeforeChange={(_editor, _data, value) => {
-                setText(value)
-              }}
-              /> 
-            </div> :
+            <Editor text={text} setText={setText} /> :
             <ReactMarkdown source={text} renderers={renderers} />
           }
         </main>
