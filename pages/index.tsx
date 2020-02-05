@@ -55,20 +55,22 @@ const IndexPage: NextPage = () => {
             </button>
           </div>
           {
-            !isPreviewMode ? 
-            <CodeMirror
-            options={codeMirrorOptions}
-            value={text}
-            editorDidMount={editor => {
-              setTimeout(() => {
-                editor.focus()
-              }, 0)
-              editor.setCursor(0)
-            }}
-            onBeforeChange={(_editor, _data, value) => {
-              setText(value)
-            }}
-            /> :
+            !isPreviewMode ?
+            <div className="text-lg">
+              <CodeMirror
+              options={codeMirrorOptions}
+              value={text}
+              editorDidMount={editor => {
+                setTimeout(() => {
+                  editor.focus()
+                }, 0)
+                editor.setCursor(0)
+              }}
+              onBeforeChange={(_editor, _data, value) => {
+                setText(value)
+              }}
+              /> 
+            </div> :
             <ReactMarkdown source={text} renderers={renderers} />
           }
         </main>
