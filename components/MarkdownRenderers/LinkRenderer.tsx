@@ -5,7 +5,7 @@ type LinkProps = {
   href: string
 }
 
-const ParagraphRenderer: React.FC<LinkProps> = ({ children, href }) => {
+const LinkRenderer: React.FC<LinkProps> = ({ children, href }) => {
   return (
     <a
       href={href}
@@ -18,4 +18,4 @@ const ParagraphRenderer: React.FC<LinkProps> = ({ children, href }) => {
   )
 }
 
-export default ParagraphRenderer
+export default LinkRenderer
