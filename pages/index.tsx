@@ -5,6 +5,7 @@ import { NextPage } from 'next'
 
 import Layout from '../components/Layout'
 import Editor from '../components/Editor'
+import Link from '../components/Link'
 import renderers from '../components/MarkdownRenderers'
 import { styleGuideText } from '../constants'
 import { useLiveWordCount } from '../hooks'
@@ -47,7 +48,10 @@ const IndexPage: NextPage = () => {
             <ReactMarkdown source={text} renderers={renderers} />
           }
         </main>
-        <footer className="flex justify-end">Word Count: {wordCount}</footer>
+        <footer className="flex justify-between items-center">
+          <small>Built by <Link href="https://kyrelldixon.com">Kai</Link></small>
+          <span>Word Count: {wordCount}</span>
+        </footer>
       </div>
     </Layout>
   )
