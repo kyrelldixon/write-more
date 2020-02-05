@@ -23,7 +23,7 @@ const IndexPage: NextPage = () => {
   const [isPreviewMode, setIsPreviewMode] = useState(false)
   const wordCount = useLiveWordCount(text)
   const togglePreviewMode = () => setIsPreviewMode(!isPreviewMode)
-  const formatDate = () => {
+  const formatTodaysDate = () => {
     const today = new Date()
     const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }
 
@@ -38,7 +38,7 @@ const IndexPage: NextPage = () => {
         </nav>
         <main>
           <div className="flex flex-col items-start mb-4 md:flex-row md:items-center md:justify-between">
-            <h1 className="mb-2 font-bold text-2xl text-green-500 md:text-3xl md:mb-0">{formatDate()}</h1>
+            <h1 className="mb-2 font-bold text-2xl text-green-500 md:text-3xl md:mb-0">{formatTodaysDate()}</h1>
             <button
               onClick={togglePreviewMode}
               className="px-4 py-1 text-green-500 border-green-500 border rounded-lg font-semibold hover:text-white hover:bg-green-400"
