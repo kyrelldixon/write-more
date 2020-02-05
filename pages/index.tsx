@@ -31,7 +31,7 @@ const IndexPage: NextPage = () => {
         <nav className="mb-20">
           <p className="font-semibold text-lg">Write More</p>
         </nav>
-        <main>
+        <main className="mb-6">
           <div className="flex flex-col items-start mb-4 md:flex-row md:items-center md:justify-between">
             <h1 className="mb-2 font-bold text-2xl text-green-500 md:text-3xl md:mb-0">{todaysDateFormatted()}</h1>
             <button
