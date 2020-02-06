@@ -6,66 +6,41 @@ import Layout from '../components/Layout'
 import Editor from '../components/Editor'
 import Link from '../components/Link'
 import renderers from '../components/MarkdownRenderers'
-import { useLiveWordCount, useInterval } from '../hooks'
+import { useLiveWordCount } from '../hooks'
 import { formatDate } from '../utils';
 import { DailyWriting } from '../types'
+import { getWriting, postWriting } from '../api'
 
 const IndexPage: NextPage = () => {
   const [dailyWriting, setDailyWriting] = useState<DailyWriting>({ id: '1' ,text: '', dateCreated: Date.now() })
-  const [writings, setWritings] = useState<DailyWriting[]>([])
   const [isPreviewMode, setIsPreviewMode] = useState(false)
-  const wordCount = useLiveWordCount(dailyWriting.text)
   const togglePreviewMode = () => setIsPreviewMode(!isPreviewMode)
 
-  const createWriting = () => {
-    const writing = { id: '1' ,text: '', dateCreated: Date.now() }
-    return writing
-  }
-  // get all writings
-  const getWritingsFromLocalStorage = () => {
-    const writings = localStorage.getItem('writings')
-    if (!writings) {
-      return []
-    }
-    return JSON.parse(writings)
-  }
-  // save writings to state on mount
   useEffect(() => {
-    const writings = getWritingsFromLocalStorage()
-    const todaysWriting = getTodaysWritingById('1')
-
-    if (!todaysWriting) {
-      const writing = createWriting()
-      setWritings([...writings, writing])
-    }
-    
-    setWritings(writings)
-  }, [])
-  // look for todays writing
-  const getTodaysWritingById = (id: string) => {
-    return writings.find(writing => writing.id === id)
-  }
-  // save all writings on interval
-  const updateWritings = () => {
-    const updated = writings.map(writing => {
-      if (writing.id === dailyWriting.id) {
-        return dailyWriting
+    const getWritingOrCreateIfNotFound = async (id: string) => {
+      let fetched = true
+      try {
+        const writing = await getWriting(id)
+        setDailyWriting(writing)
+      } catch (error) {
+        fetched = false
+        console.error(`Failed to get writing: ${error}`)
       }
-      return writing
-    })
-    setWritings(updated)
-  }
 
-  const saveWritingsToLocalStorage = (writings: DailyWriting[]) => {
-    localStorage.setItem('writings', JSON.stringify(writings))
-  }
+      if (!fetched) {
+        try {
+          const writing = await postWriting(dailyWriting)
+          setDailyWriting(writing)
+        } catch (error) {
+          console.error(`Failed to create: ${error}`)
+        }
+      }
+    }
 
-  const syncWritings = () => {
-    updateWritings()
-    saveWritingsToLocalStorage(writings)
-  }
+    getWritingOrCreateIfNotFound('1')
+  }, [])
 
-  useInterval(syncWritings, 2000)
+  const wordCount = useLiveWordCount(dailyWriting.text)
 
   return (
     <Layout title="Home | Write More">
