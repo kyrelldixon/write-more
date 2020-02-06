@@ -1,4 +1,4 @@
 export interface DailyWriting {
   text: string
-  date: number
+  dateCreated: number
 }

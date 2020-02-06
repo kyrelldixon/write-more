@@ -11,7 +11,7 @@ import { todaysDateFormatted } from '../utils';
 import { DailyWriting } from '../types'
 
 const IndexPage: NextPage = () => {
-  const [writing, setTodaysWriting] = useState<DailyWriting>({ text: '', date: Date.now() })
+  const [writing, setWriting] = useState<DailyWriting>({ text: '', dateCreated: Date.now() })
   const [isPreviewMode, setIsPreviewMode] = useState(false)
   const wordCount = useLiveWordCount(writing.text)
   const togglePreviewMode = () => setIsPreviewMode(!isPreviewMode)
@@ -34,7 +34,7 @@ const IndexPage: NextPage = () => {
           </div>
           {
             !isPreviewMode ?
-            <Editor writing={writing} updateWriting={setTodaysWriting} /> :
+            <Editor writing={writing} updateWriting={setWriting} /> :
             <ReactMarkdown source={writing.text} renderers={renderers} />
           }
         </main>
