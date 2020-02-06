@@ -2,6 +2,8 @@ import React from 'react'
 import dynamic from 'next/dynamic'
 import { Controlled as CodeMirror } from 'react-codemirror2'
 
+import { DailyWriting } from '../types'
+
 /* 
   dynamically import codemirror only on client
   since it looks for 'navigator' to render which
@@ -22,16 +24,16 @@ const codeMirrorOptions = {
 }
 
 type Props = {
-  text: string
-  setText: (text: string) => void
+  writing: DailyWriting
+  updateWriting: (writing: DailyWriting) => void
 }
 
-const Editor: React.FC<Props> = ({ text, setText }) => {
+const Editor: React.FC<Props> = ({ writing, updateWriting }) => {
   return (
     <div className="text-lg">
       <CodeMirror
         options={codeMirrorOptions}
-        value={text}
+        value={writing.text}
         editorDidMount={editor => {
           setTimeout(() => {
             editor.focus()
@@ -39,7 +41,10 @@ const Editor: React.FC<Props> = ({ text, setText }) => {
           editor.setCursor(0)
         }}
         onBeforeChange={(_editor, _data, value) => {
-          setText(value)
+          updateWriting({
+            ...writing,
+            text: value,
+          })
         }}
       /> 
     </div>

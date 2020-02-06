@@ -8,11 +8,12 @@ import Link from '../components/Link'
 import renderers from '../components/MarkdownRenderers'
 import { useLiveWordCount } from '../hooks'
 import { todaysDateFormatted } from '../utils';
+import { DailyWriting } from '../types'
 
 const IndexPage: NextPage = () => {
-  const [text, setText] = useState('')
+  const [writing, setTodaysWriting] = useState<DailyWriting>({ text: '', date: Date.now() })
   const [isPreviewMode, setIsPreviewMode] = useState(false)
-  const wordCount = useLiveWordCount(text)
+  const wordCount = useLiveWordCount(writing.text)
   const togglePreviewMode = () => setIsPreviewMode(!isPreviewMode)
 
   return (
@@ -33,8 +34,8 @@ const IndexPage: NextPage = () => {
           </div>
           {
             !isPreviewMode ?
-            <Editor text={text} setText={setText} /> :
-            <ReactMarkdown source={text} renderers={renderers} />
+            <Editor writing={writing} updateWriting={setTodaysWriting} /> :
+            <ReactMarkdown source={writing.text} renderers={renderers} />
           }
         </main>
         <footer className="flex justify-between items-center">
