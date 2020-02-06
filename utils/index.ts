@@ -8,9 +8,12 @@ export const getWordCountFromMarkdown = (markdown: string) => {
   return wordCount
 }
 
-export const todaysDateFormatted = () => {
-  const today = new Date()
-  const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }
-
-  return today.toLocaleDateString("en-US", options)
+export const formatDate = (utcDate: number, short = false) => {
+  const date = new Date(utcDate)
+  const options = 
+    short ?
+      {} :
+      { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }
+  
+  return date.toLocaleDateString("en-US", options)
 }

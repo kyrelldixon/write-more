@@ -7,7 +7,7 @@ import Editor from '../components/Editor'
 import Link from '../components/Link'
 import renderers from '../components/MarkdownRenderers'
 import { useLiveWordCount } from '../hooks'
-import { todaysDateFormatted } from '../utils';
+import { formatDate } from '../utils';
 import { DailyWriting } from '../types'
 
 const IndexPage: NextPage = () => {
@@ -24,7 +24,7 @@ const IndexPage: NextPage = () => {
         </nav>
         <main className="mb-6">
           <div className="flex flex-col items-start mb-4 md:flex-row md:items-center md:justify-between">
-            <h1 className="mb-2 font-bold text-2xl text-green-500 md:text-3xl md:mb-0">{todaysDateFormatted()}</h1>
+            <h1 className="mb-2 font-bold text-2xl text-green-500 md:text-3xl md:mb-0">{formatDate(writing.dateCreated)}</h1>
             <button
               onClick={togglePreviewMode}
               className="px-4 py-1 text-green-500 border-green-500 border rounded-lg font-semibold hover:text-white hover:bg-green-400"
