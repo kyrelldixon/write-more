@@ -55,12 +55,11 @@ const updateWritingInLocalStorage = (writing: DailyWriting) => (resolve: Promise
   try {
     const writings = localStorage.getItem('writings') || '[]'
     const prevWritings: DailyWriting[] = JSON.parse(writings)
-    
     const newWritings = prevWritings.map(prev => {
       if (prev.id === writing.id) {
         return {
           ...prev,
-          writing
+          ...writing
         }
       }
       return prev
