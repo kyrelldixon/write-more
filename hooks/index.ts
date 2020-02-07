@@ -32,3 +32,30 @@ export const useInterval = (callback: () => void, delay: number | null) => {
     }
   }, [delay])
 }
+
+export const useAutoSaveOnEdit = (onEditCallback: (value: any) => void, onSaveCallback: () => void, delay = 5000) => {
+  const [timeoutId, setTimeoutId] = useState<null | NodeJS.Timeout>(null)
+  const [saved, setSaved] = useState(false)
+  
+  const resetTimeout = (id: NodeJS.Timeout | null, newId: NodeJS.Timeout) => {	
+    if (id) clearTimeout(id)
+    return newId
+  }
+  
+  const saveValue = () => {
+    setSaved(true)
+    onSaveCallback()
+    setTimeout(() => setSaved(false), 1000)	
+  };
+
+	const editValue = (value: any) => {
+    const newId = resetTimeout(timeoutId, setTimeout(saveValue, delay))
+    setTimeoutId(newId)
+    onEditCallback(value)
+  };
+  
+  return {
+    saved,
+    editValue,
+  }
+}
