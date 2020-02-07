@@ -51,6 +51,35 @@ const getWritingsFromLocalStorage = () => (resolve: PromiseCallbackFun, reject: 
   }
 }
 
+const updateWritingInLocalStorage = (writing: DailyWriting) => (resolve: PromiseCallbackFun, reject: PromiseCallbackFun) => {
+  try {
+    const writings = localStorage.getItem('writings') || '[]'
+    const prevWritings: DailyWriting[] = JSON.parse(writings)
+    
+    const newWritings = prevWritings.map(prev => {
+      if (prev.id === writing.id) {
+        return {
+          ...prev,
+          writing
+        }
+      }
+      return prev
+    })
+    localStorage.setItem('writings', JSON.stringify(newWritings))
+    resolve(writing)
+  } catch (error) {
+    reject(error)
+  }
+}
+
+export const saveState = (writings: DailyWriting[]) =>
+  new Promise(resolve => {
+    localStorage.setItem('writings', JSON.stringify(writings))
+
+    resolve(JSON.parse(localStorage.getItem('writings') || '[]'))
+  })
+
 export const getWritings = () => new Promise(getWritingsFromLocalStorage())
 export const postWriting = (writing: DailyWriting) => new Promise(saveWritingToLocalStorage(writing))
 export const getWriting = (id: string) => new Promise(getWritingFromLocalStorage(id))
+export const putWriting = (writing: DailyWriting) => new Promise(updateWritingInLocalStorage(writing))
