@@ -33,6 +33,7 @@ export const useInterval = (callback: () => void, delay: number | null) => {
   }, [delay])
 }
 
+// Modified from https://codepen.io/mithunpk/pen/GbNLdz
 export const useAutoSaveOnEdit = (onEditCallback: (value: any) => void, onSaveCallback: () => void, delay = 5000) => {
   const [timeoutId, setTimeoutId] = useState<null | NodeJS.Timeout>(null)
   const [saved, setSaved] = useState(false)
