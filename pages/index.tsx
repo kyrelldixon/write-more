@@ -6,10 +6,10 @@ import Layout from '../components/Layout'
 import Editor from '../components/Editor'
 import Link from '../components/Link'
 import renderers from '../components/MarkdownRenderers'
-import { useLiveWordCount } from '../hooks'
+import { useLiveWordCount, useAutoSaveOnEdit } from '../hooks'
 import { formatDate } from '../utils';
 import { DailyWriting } from '../types'
-import { getWriting, postWriting } from '../api'
+import { getWriting, postWriting, putWriting } from '../api'
 
 const IndexPage: NextPage = () => {
   const [dailyWriting, setDailyWriting] = useState<DailyWriting>({ id: '1' ,text: '', dateCreated: Date.now() })
@@ -40,7 +40,13 @@ const IndexPage: NextPage = () => {
     getWritingOrCreateIfNotFound('1')
   }, [])
 
+  const saveWriting = () => {
+    putWriting(dailyWriting)
+    .catch(reason => console.error(`error saving writing ${reason}`))
+  }
+
   const wordCount = useLiveWordCount(dailyWriting.text)
+  const { saved, editValue } = useAutoSaveOnEdit(setDailyWriting, saveWriting)
 
   return (
     <Layout title="Home | Write More">
@@ -57,10 +63,11 @@ const IndexPage: NextPage = () => {
             >
               {isPreviewMode ? "Editor" : "Preview"}
             </button>
+            {saved && <span className="text-blue-500">Saved Successfully</span>}
           </div>
           {
             !isPreviewMode ?
-            <Editor writing={dailyWriting} updateWriting={setDailyWriting} /> :
+            <Editor writing={dailyWriting} updateWriting={editValue} /> :
             <ReactMarkdown source={dailyWriting.text} renderers={renderers} />
           }
         </main>
