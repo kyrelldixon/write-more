@@ -113,6 +113,6 @@ export const saveState = (writings: DailyWriting[]) =>
 export const getWritings = () => new Promise(getWritingsFromLocalStorage())
 export const postWriting = (writing: DailyWriting) => new Promise(saveWritingToLocalStorage(writing))
 export const getWriting = (id: string) => new Promise(getWritingFromLocalStorage(id))
-export const putWriting = (writing: DailyWriting) => new Promise(updateWritingInLocalStorage(writing))
+export const patchWriting = (writing: DailyWriting) => new Promise(updateWritingInLocalStorage(writing))
 export const getWritingSettings = () => new Promise(getWritingSettingsFromLocalStorage())
-export const putWritingSettings = (settings: WritingSettings) => new Promise(saveWritingSettingsToLocalStorage(settings))
+export const patchWritingSettings = (settings: WritingSettings) => new Promise(saveWritingSettingsToLocalStorage(settings))

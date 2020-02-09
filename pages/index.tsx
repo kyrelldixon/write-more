@@ -10,7 +10,7 @@ import renderers from '../components/MarkdownRenderers'
 import { useLiveWordCount, useAutoSaveOnEdit } from '../hooks'
 import { formatDate, isToday } from '../utils';
 import { DailyWriting, WritingSettings } from '../types'
-import { postWriting, putWriting, getWritingSettings, getWriting, putWritingSettings } from '../api'
+import { postWriting, patchWriting, getWritingSettings, getWriting, patchWritingSettings } from '../api'
 
 const IndexPage: NextPage = () => {
   const [, setWrittingSettings] = useState<WritingSettings>()
@@ -45,7 +45,7 @@ const IndexPage: NextPage = () => {
           const postedWriting: DailyWriting = await postWriting(dailyWriting)
           setDailyWriting(postedWriting)
           const updatedSettings = {...settings, activeWritingId: postedWriting.id}
-          const newSettings = await putWritingSettings(updatedSettings)
+          const newSettings = await patchWritingSettings(updatedSettings)
           setWrittingSettings(newSettings)
         } catch (error) {
           console.error('failed to create writing', error)
@@ -57,7 +57,7 @@ const IndexPage: NextPage = () => {
   }, [])
 
   const saveWriting = () => {
-    putWriting(dailyWriting)
+    patchWriting(dailyWriting)
     .catch(reason => console.error(`error saving writing ${reason}`))
   }
 
