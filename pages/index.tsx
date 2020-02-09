@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import ReactMarkdown from 'react-markdown'
+import uuid from 'uuid/v4'
 import { NextPage } from 'next'
 
 import Layout from '../components/Layout'
@@ -8,36 +9,48 @@ import Link from '../components/Link'
 import renderers from '../components/MarkdownRenderers'
 import { useLiveWordCount, useAutoSaveOnEdit } from '../hooks'
 import { formatDate } from '../utils';
-import { DailyWriting } from '../types'
-import { getWriting, postWriting, putWriting } from '../api'
+import { DailyWriting, WritingSettings } from '../types'
+import { postWriting, putWriting, getWritingSettings, getWriting, putWritingSettings } from '../api'
 
 const IndexPage: NextPage = () => {
-  const [dailyWriting, setDailyWriting] = useState<DailyWriting>({ id: '1' ,text: '', dateCreated: Date.now() })
+  const [, setWrittingSettings] = useState<WritingSettings>()
+  const [dailyWriting, setDailyWriting] = useState<DailyWriting>({ id: uuid() ,text: '', dateCreated: Date.now() })
   const [isPreviewMode, setIsPreviewMode] = useState(false)
   const togglePreviewMode = () => setIsPreviewMode(!isPreviewMode)
 
   useEffect(() => {
-    const getWritingOrCreateIfNotFound = async (id: string) => {
-      let fetched = true
+    const init = async () => {
+      let settings: WritingSettings = {'activeWritingId': ''};
       try {
-        const writing = await getWriting(id)
-        setDailyWriting(writing)
+        settings = await getWritingSettings()
+        setWrittingSettings(settings)
       } catch (error) {
-        fetched = false
-        console.error(`Failed to get writing: ${error}`)
+        console.error('settings not found:', error)
       }
 
-      if (!fetched) {
+      let gotWriting = true
+      try {
+        const writing = await getWriting(settings.activeWritingId)
+        setDailyWriting(writing)
+      } catch (error) {
+        console.error('writing not found:', error)
+        gotWriting = false
+      }
+
+      if (!gotWriting) {
         try {
-          const writing = await postWriting(dailyWriting)
-          setDailyWriting(writing)
+          const postedWriting: DailyWriting = await postWriting(dailyWriting)
+          setDailyWriting(postedWriting)
+          const updatedSettings = {...settings, activeWritingId: postedWriting.id}
+          const newSettings = await putWritingSettings(updatedSettings)
+          setWrittingSettings(newSettings)
         } catch (error) {
-          console.error(`Failed to create: ${error}`)
+          console.error('failed to create writing', error)
         }
       }
     }
 
-    getWritingOrCreateIfNotFound('1')
+    init()
   }, [])
 
   const saveWriting = () => {
