@@ -8,7 +8,7 @@ import Editor from '../components/Editor'
 import Link from '../components/Link'
 import renderers from '../components/MarkdownRenderers'
 import { useLiveWordCount, useAutoSaveOnEdit } from '../hooks'
-import { formatDate } from '../utils';
+import { formatDate, isToday } from '../utils';
 import { DailyWriting, WritingSettings } from '../types'
 import { postWriting, putWriting, getWritingSettings, getWriting, putWritingSettings } from '../api'
 
@@ -28,16 +28,19 @@ const IndexPage: NextPage = () => {
         console.error('settings not found:', error)
       }
 
-      let gotWriting = true
+      let gotWritingForToday = true
       try {
         const writing = await getWriting(settings.activeWritingId)
+        if (!isToday(writing.dateCreated)) {
+          throw new Error('writing not from today')
+        }
         setDailyWriting(writing)
       } catch (error) {
-        console.error('writing not found:', error)
-        gotWriting = false
+        console.error(error)
+        gotWritingForToday = false
       }
 
-      if (!gotWriting) {
+      if (!gotWritingForToday) {
         try {
           const postedWriting: DailyWriting = await postWriting(dailyWriting)
           setDailyWriting(postedWriting)

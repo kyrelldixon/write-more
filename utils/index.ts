@@ -17,3 +17,11 @@ export const formatDate = (utcDate: number, short = false) => {
   
   return date.toLocaleDateString("en-US", options)
 }
+
+export const isToday = (someDate: number) => {
+  const today = new Date()
+  const date = new Date(someDate)
+  return date.getDate() == today.getDate() &&
+    date.getMonth() == today.getMonth() &&
+    date.getFullYear() == today.getFullYear()
+}
