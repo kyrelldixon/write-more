@@ -3,3 +3,7 @@ export interface DailyWriting {
   text: string
   dateCreated: number
 }
+
+export interface WritingSettings {
+  activeWritingId: string
+}

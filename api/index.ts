@@ -1,4 +1,4 @@
-import { DailyWriting } from "../types"
+import { DailyWriting, WritingSettings } from "../types"
 
 type PromiseCallbackFun = (value?: any) => void
 
@@ -71,6 +71,38 @@ const updateWritingInLocalStorage = (writing: DailyWriting) => (resolve: Promise
   }
 }
 
+const getWritingSettingsFromLocalStorage = () => (resolve: PromiseCallbackFun, reject: PromiseCallbackFun) => {
+  const writingSettings: any = localStorage.getItem('writingSettings')
+
+  // check if there is any data in localstorage
+  if (!writingSettings) {
+    // if there is none (i.e. new user), create new settings
+    const initialSettings = {
+      activeWritingId: '',
+    }
+    resolve(initialSettings)
+  } else if (JSON.parse(writingSettings)) {
+    // if there is (existing user), get the user's writingSettings
+    resolve(JSON.parse(writingSettings))
+  } else {
+    reject({
+      message: 'Something went wrong',
+    })
+  }
+}
+
+const saveWritingSettingsToLocalStorage = (settings: WritingSettings) => (resolve: PromiseCallbackFun, reject: PromiseCallbackFun) => {
+  try {
+    const encodedSettings = localStorage.getItem('writingSettings') || '{}'
+    const prevSettings: WritingSettings = JSON.parse(encodedSettings)
+    const newSettings: WritingSettings = {...prevSettings, ...settings}
+    localStorage.setItem('writingSettings', JSON.stringify(newSettings))
+    resolve(newSettings)
+  } catch (error) {
+    reject(error)
+  }
+}
+
 export const saveState = (writings: DailyWriting[]) =>
   new Promise(resolve => {
     localStorage.setItem('writings', JSON.stringify(writings))
@@ -82,3 +114,5 @@ export const getWritings = () => new Promise(getWritingsFromLocalStorage())
 export const postWriting = (writing: DailyWriting) => new Promise(saveWritingToLocalStorage(writing))
 export const getWriting = (id: string) => new Promise(getWritingFromLocalStorage(id))
 export const putWriting = (writing: DailyWriting) => new Promise(updateWritingInLocalStorage(writing))
+export const getWritingSettings = () => new Promise(getWritingSettingsFromLocalStorage())
+export const putWritingSettings = (settings: WritingSettings) => new Promise(saveWritingSettingsToLocalStorage(settings))
