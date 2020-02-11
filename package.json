@@ -2,7 +2,7 @@
   "name": "next-tailwind-typescript-starter",
   "version": "1.0.0",
   "scripts": {
-    "dev": "next",
+    "dev": "next dev -H 192.168.1.110",
     "build": "next build",
     "start": "next start",
     "stage": "yarn build; yarn start",
