@@ -4,6 +4,7 @@ import { Controlled as CodeMirror } from 'react-codemirror2'
 import { DailyWriting } from '../types'
 
 import 'codemirror/mode/gfm/gfm'
+import 'codemirror/addon/display/placeholder'
 
 // from https://github.com/taniarascia/takenote/blob/master/src/client/slices/settings.ts
 const codeMirrorOptions = {
@@ -15,6 +16,7 @@ const codeMirrorOptions = {
   dragDrop: false,
   autoFocus: true,
   cursorHeight: 0.85,
+  placeholder: 'Write anything...',
 }
 
 type Props = {

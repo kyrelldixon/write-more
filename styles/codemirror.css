@@ -1,3 +1,7 @@
 .CodeMirror {
   height: auto;
 }
+
+.CodeMirror-placeholder {
+  @apply text-gray-400 !important;
+}
