@@ -1,16 +1,21 @@
 import React, { useState, useEffect } from 'react'
+import dynamic from 'next/dynamic'
 import ReactMarkdown from 'react-markdown'
 import uuid from 'uuid/v4'
 import { NextPage } from 'next'
 
 import Layout from '../components/Layout'
-import Editor from '../components/Editor'
+// import Editor from '../components/Editor'
 import Link from '../components/Link'
 import renderers from '../components/MarkdownRenderers'
 import { useLiveWordCount, useAutoSaveOnEdit } from '../hooks'
 import { formatDate, isToday } from '../utils';
 import { DailyWriting, WritingSettings } from '../types'
 import { postWriting, patchWriting, getWritingSettings, getWriting, patchWritingSettings } from '../api'
+
+const Editor = dynamic(() => {
+  return import('../components/Editor')
+}, { ssr: false })
 
 const IndexPage: NextPage = () => {
   const [, setWrittingSettings] = useState<WritingSettings>()
