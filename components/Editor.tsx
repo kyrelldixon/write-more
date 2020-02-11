@@ -34,7 +34,6 @@ const Editor: React.FC<Props> = ({ writing, updateWriting }) => {
           setTimeout(() => {
             editor.focus()
           }, 0)
-          editor.setCursor(0)
         }}
         onBeforeChange={(_editor, _data, value) => {
           updateWriting({
