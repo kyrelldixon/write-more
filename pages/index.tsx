@@ -78,8 +78,7 @@ const IndexPage: NextPage = () => {
               className="px-4 py-1 text-green-500 border-green-500 border rounded-lg font-semibold hover:text-white hover:bg-green-400"
             >
               {isPreviewMode ? "Editor" : "Preview"}
-            </button>
-            {saved && <span className="text-blue-500">Saved Successfully</span>}
+            </button>            
           </div>
           {
             !isPreviewMode ?
@@ -89,6 +88,7 @@ const IndexPage: NextPage = () => {
         </main>
         <footer className="flex justify-between items-center">
           <small>Built by <Link href="https://kyrelldixon.com">Kai</Link></small>
+          {saved && <span className="text-green-500">Saved Successfully</span>}
           <span>Word Count: {wordCount}</span>
         </footer>
       </div>
