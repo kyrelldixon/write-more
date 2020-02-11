@@ -13,6 +13,8 @@ const codeMirrorOptions = {
   viewportMargin: Infinity,
   keyMap: 'default',
   dragDrop: false,
+  autoFocus: true,
+  cursorHeight: 0.85,
 }
 
 type Props = {
@@ -22,7 +24,7 @@ type Props = {
 
 const Editor: React.FC<Props> = ({ writing, updateWriting }) => {
   return (
-    <div className="text-lg">
+    <div className="text-xl md:text-lg">
       <CodeMirror
         options={codeMirrorOptions}
         value={writing.text}
