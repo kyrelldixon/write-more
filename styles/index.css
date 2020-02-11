@@ -1,5 +1,6 @@
 /* purgecss start ignore */
 @tailwind base;
 @tailwind components;
+@import '~codemirror/lib/codemirror.css';
 /* purgecss end ignore */
 @tailwind utilities;
