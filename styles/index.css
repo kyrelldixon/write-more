@@ -2,5 +2,6 @@
 @tailwind base;
 @tailwind components;
 @import '~codemirror/lib/codemirror.css';
+@import 'mirrormark.css';
 /* purgecss end ignore */
 @tailwind utilities;

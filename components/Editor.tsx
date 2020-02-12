@@ -9,10 +9,19 @@ import 'codemirror/addon/display/placeholder'
 // from https://github.com/taniarascia/takenote/blob/master/src/client/slices/settings.ts
 const codeMirrorOptions = {
   mode: 'gfm',
+  theme: 'default mirrormark',
+  tabSize: 2,
+  indentWithTabs: true,
+  autoCloseBrackets: true,
+  autoCloseTags: true,
+  addModeClass: true,
+  extraKeys: {
+    "Enter": 'newlineAndIndentContinueMarkdownList',
+  },
   lineNumbers: false,
   lineWrapping: true,
   viewportMargin: Infinity,
-  keyMap: 'default',
+  // keyMap: 'default',
   dragDrop: false,
   autoFocus: true,
   cursorHeight: 0.85,
