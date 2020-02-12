@@ -7,7 +7,6 @@
   height: auto !important;
   overflow: visible !important;
   box-sizing: border-box;
-  @apply px-0 py-8;
 }
 .cm-s-mirrormark.CodeMirror-fullscreen .CodeMirror-scroll {
   height: 100% !important;
