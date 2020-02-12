@@ -1,16 +1,13 @@
 .cm-s-mirrormark {
   font: 16px/1.7 Menlo, Consolas, Monaco, 'Andale Mono', monospace;
   box-sizing: border-box;
-  height: auto;
-  margin: auto;
-  position: relative;
-  z-index: 0;
+  @apply relative h-auto m-auto z-0;
 }
 .cm-s-mirrormark .CodeMirror-scroll {
   height: auto !important;
   overflow: visible !important;
-  padding: 30px 4%;
   box-sizing: border-box;
+  @apply px-0 py-8;
 }
 .cm-s-mirrormark.CodeMirror-fullscreen .CodeMirror-scroll {
   height: 100% !important;
@@ -20,30 +17,34 @@
   color: #999;
 }
 .cm-s-mirrormark .cm-m-markdown {
-  color: #000;
-  font-family: sans-serif;
+  @apply text-gray-900;
 }
 .cm-s-mirrormark .cm-m-markdown.cm-header {
   font-family: Menlo, Consolas, Monaco, 'Andale Mono', monospace;
-  font-weight: bold;
+  @apply font-bold;
 }
 .cm-s-mirrormark .cm-m-markdown.cm-header-1 {
-  font-size: 28px;
+  @apply text-3xl;
 }
 .cm-s-mirrormark .cm-m-markdown.cm-header-2 {
-  font-size: 22px;
+  @apply text-2xl;
 }
-.cm-s-mirrormark .cm-m-markdown.cm-header-2 {
-  font-size: 18px;
+.cm-s-mirrormark .cm-m-markdown.cm-header-3 {
+  @apply text-xl;
+}
+.cm-s-mirrormark .cm-m-markdown.cm-variable-2 {
+  @apply font-semibold;
 }
 .cm-s-mirrormark .cm-m-markdown.cm-quote {
-  color: #888;
-  background-color: rgba(128, 128, 128, 0.05);
-  padding: 5px;
+  @apply text-lg font-semibold px-4 py-2 border-l-4;
 }
-.cm-s-mirrormark .cm-m-markdown.cm-quote,
+.cm-s-mirrormark .cm-m-markdown.cm-url {
+  @apply text-blue-500;
+}
 .cm-s-mirrormark .cm-m-markdown.cm-string {
-  color: #888;
+  /* color: #888;
+  background-color: rgba(128, 128, 128, 0.05);
+  padding: 5px; */
 }
 .cm-s-mirrormark .cm-m-markdown.cm-tag,
 .cm-s-mirrormark .cm-m-markdown.cm-link {
