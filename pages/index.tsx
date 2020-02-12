@@ -17,14 +17,14 @@ const Editor = dynamic(() => {
 }, { ssr: false })
 
 const IndexPage: NextPage = () => {
-  const [, setWrittingSettings] = useState<WritingSettings>()
+  const [writingSettings, setWrittingSettings] = useState<WritingSettings>()
   const [dailyWriting, setDailyWriting] = useState<DailyWriting>({ id: uuid() ,text: '', dateCreated: Date.now() })
   const [isPreviewMode, setIsPreviewMode] = useState(false)
   const togglePreviewMode = () => setIsPreviewMode(!isPreviewMode)
 
   useEffect(() => {
     const init = async () => {
-      let settings: WritingSettings = {'activeWritingId': ''};
+      let settings: WritingSettings = {'activeWritingId': '', wordCountGoal: 750};
       try {
         settings = await getWritingSettings()
         setWrittingSettings(settings)
@@ -66,6 +66,7 @@ const IndexPage: NextPage = () => {
   }
 
   const wordCount = useLiveWordCount(dailyWriting.text)
+  const goal = writingSettings?.wordCountGoal || 750
   const { saved, editValue } = useAutoSaveOnEdit(setDailyWriting, saveWriting)
 
   return (
@@ -90,10 +91,13 @@ const IndexPage: NextPage = () => {
             <ReactMarkdown source={dailyWriting.text} renderers={renderers} />
           }
         </main>
-        <footer className="flex justify-between items-center">
+        <footer className="flex justify-between items-end">
           <small>Built by <Link href="https://kyrelldixon.com">Kai</Link></small>
           {saved && <span className="text-green-500">Saved Successfully</span>}
-          <span>Word Count: {wordCount}</span>
+          <div className={`flex flex-col ${wordCount >= goal ? 'text-green-500' : ''}`}>
+            <span>Goal: {goal}</span>
+            <span>Word Count: {wordCount}</span>
+          </div>
         </footer>
       </div>
     </Layout>
