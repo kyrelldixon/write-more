@@ -94,7 +94,7 @@ const IndexPage: NextPage = () => {
         <footer className="flex justify-between items-end">
           <small>Built by <Link href="https://kyrelldixon.com">Kai</Link></small>
           {saved && <span className="text-green-500">Saved Successfully</span>}
-          <div className={`flex flex-col ${wordCount >= goal ? 'text-green-500' : ''}`}>
+          <div className={`flex flex-col text-right ${wordCount >= goal ? 'text-green-500' : ''}`}>
             <span>Goal: {goal}</span>
             <span>Word Count: {wordCount}</span>
           </div>
