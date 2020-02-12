@@ -5,7 +5,6 @@ import uuid from 'uuid/v4'
 import { NextPage } from 'next'
 
 import Layout from '../components/Layout'
-// import Editor from '../components/Editor'
 import Link from '../components/Link'
 import renderers from '../components/MarkdownRenderers'
 import { useLiveWordCount, useAutoSaveOnEdit } from '../hooks'
