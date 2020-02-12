@@ -74,7 +74,9 @@ const IndexPage: NextPage = () => {
       <nav className="fixed z-10 w-screen p-4 bg-white border-b md:border-none">
         <div className="max-w-2xl flex justify-between items-end mx-auto">
           <p className="font-semibold text-lg">Write More</p>
-          <span className={wordCount >= goal ? 'text-green-500' : ''}>Word Count: {wordCount}</span>
+          <span className={wordCount >= goal ? 'text-green-500' : ''}>
+            <span className="font-semibold">{wordCount}</span> Words
+          </span>
         </div>
       </nav>
       <div className="max-w-2xl mx-auto pt-32 p-4">
