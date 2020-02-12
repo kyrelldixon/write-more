@@ -71,13 +71,16 @@ const IndexPage: NextPage = () => {
 
   return (
     <Layout title="Home | Write More">
-      <div className="max-w-2xl mx-auto p-4">
-        <nav className="mb-20">
+      <nav className="fixed z-10 w-screen p-4 bg-white border-b md:border-none">
+        <div className="max-w-2xl flex justify-between items-end mx-auto">
           <p className="font-semibold text-lg">Write More</p>
-        </nav>
+          <span className={wordCount >= goal ? 'text-green-500' : ''}>Word Count: {wordCount}</span>
+        </div>
+      </nav>
+      <div className="max-w-2xl mx-auto pt-32 p-4">
         <main className="mb-6">
           <div className="flex flex-col items-start mb-4 md:flex-row md:items-center md:justify-between">
-            <h1 className="mb-2 font-bold text-2xl text-green-500 md:text-3xl md:mb-0">{formatDate(dailyWriting.dateCreated)}</h1>
+            <h1 className="mb-4 font-bold text-3xl text-green-500 md:text-3xl md:mb-0">{formatDate(dailyWriting.dateCreated)}</h1>
             <button
               onClick={togglePreviewMode}
               className="px-4 py-1 text-green-500 border-green-500 border rounded-lg font-semibold hover:text-white hover:bg-green-400"
@@ -96,7 +99,6 @@ const IndexPage: NextPage = () => {
           {saved && <span className="text-green-500">Saved Successfully</span>}
           <div className={`flex flex-col text-right ${wordCount >= goal ? 'text-green-500' : ''}`}>
             <span>Goal: {goal}</span>
-            <span>Word Count: {wordCount}</span>
           </div>
         </footer>
       </div>
