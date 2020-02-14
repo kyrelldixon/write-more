@@ -6,5 +6,5 @@ export interface DailyWriting {
 
 export interface WritingSettings {
   activeWritingId: string
-  wordCountGoal: number
+  dailyGoal: number
 }

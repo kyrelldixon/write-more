@@ -27,6 +27,27 @@ export const isToday = (someDate: number) => {
     date.getFullYear() == today.getFullYear()
 }
 
-export const getDaysInRow = (writings: DailyWriting[]) => {
-  return writings.length
+export const getDaysInRow = (writings: DailyWriting[], goal: number) => {
+  let streak = 0
+  let currentDate = new Date()
+  if (writings.length === 0) {
+    return streak
+  }
+
+  for (let i = writings.length - 1; i >= 0; i--) {
+    const date = new Date(writings[i].dateCreated)
+    console.log(date.getDate(), currentDate.getDate())
+    if (date.getDate() !== currentDate.getDate()) {
+      break;
+    }
+    const wordCount = getWordCountFromMarkdown(writings[i].text)
+    console.log(`${i}: ${wordCount} ${date.getDate()}`)
+    if (wordCount < goal) {
+      break;
+    }
+    streak += 1
+    currentDate = new Date(writings[i].dateCreated - 60 * 1000 * 60 * 24)
+  }
+
+  return streak
 }

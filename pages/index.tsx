@@ -18,14 +18,14 @@ const Editor = dynamic(() => {
 
 const IndexPage: NextPage = () => {
   const [writingsStreak, setWritingsStreak] = useState(0)
-  const [writingSettings, setWrittingSettings] = useState<WritingSettings>()
+  const [writingSettings, setWrittingSettings] = useState<WritingSettings>({ activeWritingId: '', dailyGoal: 750 })
   const [dailyWriting, setDailyWriting] = useState<DailyWriting>({ id: uuid() ,text: '', dateCreated: Date.now() })
   const [isPreviewMode, setIsPreviewMode] = useState(false)
   const togglePreviewMode = () => setIsPreviewMode(!isPreviewMode)
 
   useEffect(() => {
     const init = async () => {
-      let settings: WritingSettings = {'activeWritingId': '', wordCountGoal: 750};
+      let settings: WritingSettings = writingSettings
       try {
         settings = await getWritingSettings()
         setWrittingSettings(settings)
@@ -58,7 +58,7 @@ const IndexPage: NextPage = () => {
       }
 
       const writings = await getWritings()
-      const streak = getDaysInRow(writings)
+      const streak = getDaysInRow(writings, writingSettings.dailyGoal)
       setWritingsStreak(streak)
     }
 
@@ -71,7 +71,7 @@ const IndexPage: NextPage = () => {
   }
 
   const wordCount = useLiveWordCount(dailyWriting.text)
-  const goal = writingSettings?.wordCountGoal || 750
+  const { dailyGoal } = writingSettings
   const { saved, editValue } = useAutoSaveOnEdit(setDailyWriting, saveWriting)
 
   return (
@@ -81,7 +81,7 @@ const IndexPage: NextPage = () => {
           <p className="font-semibold text-lg">Write More</p>
           <div>
             <span className="mr-2">{writingsStreak} Day Streak</span>
-            <span className={wordCount >= goal ? 'text-green-500' : ''}>
+            <span className={wordCount >= dailyGoal ? 'text-green-500' : ''}>
               <span className="font-semibold">{wordCount}</span> Words
             </span>
           </div>
@@ -106,9 +106,9 @@ const IndexPage: NextPage = () => {
         </main>
         <footer className="flex justify-between items-end">
           <small>Built by <Link href="https://kyrelldixon.com">Kai</Link></small>
-          <div className={`flex flex-col text-right ${wordCount >= goal ? 'text-green-500' : ''}`}>
+          <div className={`flex flex-col text-right ${wordCount >= dailyGoal ? 'text-green-500' : ''}`}>
             {saved && <span className="text-green-500">Saved Successfully</span>}
-            <span><span className="font-semibold">{wordCount <= goal ? goal - wordCount : 0}</span> Words left</span>
+            <span><span className="font-semibold">{wordCount <= dailyGoal ? dailyGoal - wordCount : 0}</span> Words left</span>
           </div>
         </footer>
       </div>
