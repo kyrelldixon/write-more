@@ -1,4 +1,5 @@
 import removeMd from 'remove-markdown'
+import { DailyWriting } from '../types'
 
 export const getWordCountFromMarkdown = (markdown: string) => {
   const plainText = removeMd(markdown)
@@ -24,4 +25,8 @@ export const isToday = (someDate: number) => {
   return date.getDate() == today.getDate() &&
     date.getMonth() == today.getMonth() &&
     date.getFullYear() == today.getFullYear()
+}
+
+export const getDaysInRow = (writings: DailyWriting[]) => {
+  return writings.length
 }

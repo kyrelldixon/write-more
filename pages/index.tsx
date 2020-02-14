@@ -8,15 +8,16 @@ import Layout from '../components/Layout'
 import Link from '../components/Link'
 import renderers from '../components/MarkdownRenderers'
 import { useLiveWordCount, useAutoSaveOnEdit } from '../hooks'
-import { formatDate, isToday } from '../utils';
+import { formatDate, isToday, getDaysInRow } from '../utils';
 import { DailyWriting, WritingSettings } from '../types'
-import { postWriting, patchWriting, getWritingSettings, getWriting, patchWritingSettings } from '../api'
+import { postWriting, patchWriting, getWritingSettings, getWriting, patchWritingSettings, getWritings } from '../api'
 
 const Editor = dynamic(() => {
   return import('../components/Editor')
 }, { ssr: false })
 
 const IndexPage: NextPage = () => {
+  const [writingsStreak, setWritingsStreak] = useState(0)
   const [writingSettings, setWrittingSettings] = useState<WritingSettings>()
   const [dailyWriting, setDailyWriting] = useState<DailyWriting>({ id: uuid() ,text: '', dateCreated: Date.now() })
   const [isPreviewMode, setIsPreviewMode] = useState(false)
@@ -55,6 +56,10 @@ const IndexPage: NextPage = () => {
           console.error('failed to create writing', error)
         }
       }
+
+      const writings = await getWritings()
+      const streak = getDaysInRow(writings)
+      setWritingsStreak(streak)
     }
 
     init()
@@ -74,9 +79,12 @@ const IndexPage: NextPage = () => {
       <nav className="fixed z-10 w-screen p-4 bg-white border-b md:border-none">
         <div className="max-w-2xl flex justify-between items-end mx-auto">
           <p className="font-semibold text-lg">Write More</p>
-          <span className={wordCount >= goal ? 'text-green-500' : ''}>
-            <span className="font-semibold">{wordCount}</span> Words
-          </span>
+          <div>
+            <span className="mr-2">{writingsStreak} Day Streak</span>
+            <span className={wordCount >= goal ? 'text-green-500' : ''}>
+              <span className="font-semibold">{wordCount}</span> Words
+            </span>
+          </div>
         </div>
       </nav>
       <div className="max-w-2xl mx-auto pt-32 p-4">
