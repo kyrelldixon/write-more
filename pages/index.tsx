@@ -23,9 +23,18 @@ const IndexPage: NextPage = () => {
   const [dailyWriting, setDailyWriting] = useState<DailyWriting>({ id: uuid() ,text: '', created: new Date().toISOString() })
   const [isPreviewMode, setIsPreviewMode] = useState(false)
   const [isGoalVisible, setIsGoalVisible] = useState(false)
+  const [goal, setGoal] = useState(0)
 
   const togglePreviewMode = () => setIsPreviewMode(!isPreviewMode)
   const toggleGoalVisibility = () => setIsGoalVisible(!isGoalVisible)
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setGoal(+e.target.value)
+  }
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault()
+    patchWritingSettings({...writingSettings, dailyGoal: goal})
+    .then(settings => setWrittingSettings(settings))
+  }
 
   useEffect(() => {
     const init = async () => {
@@ -92,10 +101,22 @@ const IndexPage: NextPage = () => {
           </div>
           <button onClick={toggleGoalVisibility}><Gear /></button>
         </div>
-        {isGoalVisible && <div className="flex justify-start items-center mx-auto max-w-2xl">
-          <label className="mr-2">Word Count Goal:</label>
-          <input className="p-1 border" type="number" placeholder="750" />
-        </div>}
+        {
+          isGoalVisible &&
+          (<form onSubmit={handleSubmit} className="flex justify-start items-center mx-auto max-w-2xl">
+            <label className="mr-2">Word Count Goal:</label>
+            <input
+              className="p-1 border mr-2"
+              type="tel"
+              pattern="[0-9]*"
+              placeholder="750"
+              name="goal"
+              value={goal}
+              onChange={handleChange}
+            />
+            <button>Submit</button>
+          </form>)
+        }
       </nav>
       <div className="max-w-2xl mx-auto pt-32 p-4">
         <main className="mb-6">
