@@ -6,6 +6,7 @@ import { NextPage } from 'next'
 
 import Layout from '../components/Layout'
 import Link from '../components/Link'
+import Gear from '../components/Gear'
 import renderers from '../components/MarkdownRenderers'
 import { useLiveWordCount, useAutoSaveOnEdit } from '../hooks'
 import { formatDate, isToday, getDaysInRow } from '../utils';
@@ -21,7 +22,10 @@ const IndexPage: NextPage = () => {
   const [writingSettings, setWrittingSettings] = useState<WritingSettings>({ activeWritingId: '', dailyGoal: 750 })
   const [dailyWriting, setDailyWriting] = useState<DailyWriting>({ id: uuid() ,text: '', created: new Date().toISOString() })
   const [isPreviewMode, setIsPreviewMode] = useState(false)
+  const [isGoalVisible, setIsGoalVisible] = useState(false)
+
   const togglePreviewMode = () => setIsPreviewMode(!isPreviewMode)
+  const toggleGoalVisibility = () => setIsGoalVisible(!isGoalVisible)
 
   useEffect(() => {
     const init = async () => {
@@ -77,16 +81,21 @@ const IndexPage: NextPage = () => {
   return (
     <Layout title="Home | Write More">
       <nav className="fixed z-10 w-screen p-4 bg-white border-b md:border-none">
-        <div className="max-w-2xl flex justify-between items-end mx-auto">
+        <div className="max-w-2xl flex justify-between items-center mx-auto pb-2">
           <p className="font-semibold text-lg">Write More</p>
-          <div className={wordCount >= dailyGoal ? 'text-green-500' : ''}>
+          <div className={`flex items-center ${wordCount >= dailyGoal ? 'text-green-500' : ''}`}>
             <span className="mr-2">
               <span className="font-semibold">{writingsStreak}</span> Day Streak</span>
             <span>
               <span className="font-semibold">{wordCount}</span> Words
             </span>
           </div>
+          <button onClick={toggleGoalVisibility}><Gear /></button>
         </div>
+        {isGoalVisible && <div className="flex justify-start items-center mx-auto max-w-2xl">
+          <label className="mr-2">Word Count Goal:</label>
+          <input className="p-1 border" type="number" placeholder="750" />
+        </div>}
       </nav>
       <div className="max-w-2xl mx-auto pt-32 p-4">
         <main className="mb-6">
@@ -97,7 +106,7 @@ const IndexPage: NextPage = () => {
               className="px-4 py-1 text-green-500 border-green-500 border rounded-lg font-semibold hover:text-white hover:bg-green-400"
             >
               {isPreviewMode ? "Editor" : "Preview"}
-            </button>            
+            </button>           
           </div>
           {
             !isPreviewMode ?
