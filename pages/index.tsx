@@ -55,12 +55,13 @@ const IndexPage: NextPage = () => {
           writing = {id: writing.id, created, text: writing.text}
         }
         if (!isToday(writing.created)) {
-          throw new Error('writing not from today')
+          gotWritingForToday = false
         }
-        setDailyWriting(writing)
+        else if (isToday(writing.created)) {
+          setDailyWriting(writing)
+        }
       } catch (error) {
         console.error(error)
-        gotWritingForToday = false
       }
 
       if (!gotWritingForToday) {
