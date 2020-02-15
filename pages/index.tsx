@@ -19,7 +19,7 @@ const Editor = dynamic(() => {
 
 const IndexPage: NextPage = () => {
   const [writingsStreak, setWritingsStreak] = useState(0)
-  const [writingSettings, setWrittingSettings] = useState<WritingSettings>({ activeWritingId: '', dailyGoal: 750 })
+  const [writingSettings, setWritingSettings] = useState<WritingSettings>({ activeWritingId: '', dailyGoal: 750 })
   const [dailyWriting, setDailyWriting] = useState<DailyWriting>({ id: uuid() ,text: '', created: new Date().toISOString() })
   const [isPreviewMode, setIsPreviewMode] = useState(false)
   const [isGoalVisible, setIsGoalVisible] = useState(false)
@@ -33,7 +33,7 @@ const IndexPage: NextPage = () => {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
     patchWritingSettings({...writingSettings, dailyGoal: goal})
-    .then(settings => setWrittingSettings(settings))
+    .then(settings => setWritingSettings(settings))
   }
 
   useEffect(() => {
@@ -41,7 +41,7 @@ const IndexPage: NextPage = () => {
       let settings: WritingSettings = writingSettings
       try {
         settings = await getWritingSettings()
-        setWrittingSettings(settings)
+        setWritingSettings(settings)
       } catch (error) {
         console.error('settings not found:', error)
       }
@@ -64,7 +64,7 @@ const IndexPage: NextPage = () => {
           setDailyWriting(postedWriting)
           const updatedSettings = {...settings, activeWritingId: postedWriting.id}
           const newSettings = await patchWritingSettings(updatedSettings)
-          setWrittingSettings(newSettings)
+          setWritingSettings(newSettings)
         } catch (error) {
           console.error('failed to create writing', error)
         }
