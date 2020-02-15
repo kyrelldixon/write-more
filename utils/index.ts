@@ -1,4 +1,5 @@
 import removeMd from 'remove-markdown'
+import moment from 'moment'
 import { DailyWriting } from '../types'
 
 export const getWordCountFromMarkdown = (markdown: string) => {
@@ -20,33 +21,28 @@ export const formatDate = (utcDate: string, short = false) => {
 }
 
 export const isToday = (someDate: string) => {
-  const today = new Date()
-  const date = new Date(someDate)
-  return date.getDate() == today.getDate() &&
-    date.getMonth() == today.getMonth() &&
-    date.getFullYear() == today.getFullYear()
+  const today = moment()
+  return today.isSame(someDate, 'day')
 }
 
 export const getDaysInRow = (writings: DailyWriting[], goal: number) => {
   let streak = 0
-  let currentDate = new Date()
+  let currentDate = moment()
   if (writings.length === 0) {
     return streak
   }
 
   for (let i = writings.length - 1; i >= 0; i--) {
-    const date = new Date(writings[i].created)
-    console.log(date, currentDate.getDate())
-    if (date.getDate() !== currentDate.getDate()) {
+    const date = moment(writings[i].created)
+    if (date.date() !== currentDate.date()) {
       break;
     }
     const wordCount = getWordCountFromMarkdown(writings[i].text)
-    console.log(`${i}: ${wordCount} ${date.getDate()}`)
     if (wordCount < goal) {
       break;
     }
     streak += 1
-    currentDate = new Date(date.getTime()  - 60 * 1000 * 60 * 24)
+    currentDate = currentDate.add(-1, 'days');
   }
 
   return streak
