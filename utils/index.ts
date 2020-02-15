@@ -35,7 +35,7 @@ export const getDaysInRow = (writings: DailyWriting[], goal: number) => {
   }
 
   for (let i = writings.length - 1; i >= 0; i--) {
-    const date = new Date(writings[i].dateCreated)
+    const date = new Date(writings[i].created)
     console.log(date.getDate(), currentDate.getDate())
     if (date.getDate() !== currentDate.getDate()) {
       break;
@@ -46,7 +46,7 @@ export const getDaysInRow = (writings: DailyWriting[], goal: number) => {
       break;
     }
     streak += 1
-    currentDate = new Date(writings[i].dateCreated - 60 * 1000 * 60 * 24)
+    currentDate = new Date(writings[i].created - 60 * 1000 * 60 * 24)
   }
 
   return streak

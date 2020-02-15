@@ -19,11 +19,12 @@ const Editor = dynamic(() => {
 const IndexPage: NextPage = () => {
   const [writingsStreak, setWritingsStreak] = useState(0)
   const [writingSettings, setWrittingSettings] = useState<WritingSettings>({ activeWritingId: '', dailyGoal: 750 })
-  const [dailyWriting, setDailyWriting] = useState<DailyWriting>({ id: uuid() ,text: '', dateCreated: Date.now() })
+  const [dailyWriting, setDailyWriting] = useState<DailyWriting>({ id: uuid() ,text: '', created: Date.now() })
   const [isPreviewMode, setIsPreviewMode] = useState(false)
   const togglePreviewMode = () => setIsPreviewMode(!isPreviewMode)
 
   useEffect(() => {
+    console.log({date: new Date().toISOString()})
     const init = async () => {
       let settings: WritingSettings = writingSettings
       try {
@@ -36,7 +37,7 @@ const IndexPage: NextPage = () => {
       let gotWritingForToday = true
       try {
         const writing = await getWriting(settings.activeWritingId)
-        if (!isToday(writing.dateCreated)) {
+        if (!isToday(writing.created)) {
           throw new Error('writing not from today')
         }
         setDailyWriting(writing)
@@ -90,7 +91,7 @@ const IndexPage: NextPage = () => {
       <div className="max-w-2xl mx-auto pt-32 p-4">
         <main className="mb-6">
           <div className="flex flex-col items-start mb-4 md:flex-row md:items-center md:justify-between">
-            <h1 className="mb-4 font-bold text-3xl text-green-500 md:text-3xl md:mb-0">{formatDate(dailyWriting.dateCreated)}</h1>
+            <h1 className="mb-4 font-bold text-3xl text-green-500 md:text-3xl md:mb-0">{formatDate(dailyWriting.created)}</h1>
             <button
               onClick={togglePreviewMode}
               className="px-4 py-1 text-green-500 border-green-500 border rounded-lg font-semibold hover:text-white hover:bg-green-400"

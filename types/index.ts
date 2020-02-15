@@ -1,7 +1,7 @@
 export interface DailyWriting {
   id: string
   text: string
-  dateCreated: number
+  created: number
 }
 
 export interface WritingSettings {
