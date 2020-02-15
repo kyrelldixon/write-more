@@ -79,9 +79,10 @@ const IndexPage: NextPage = () => {
       <nav className="fixed z-10 w-screen p-4 bg-white border-b md:border-none">
         <div className="max-w-2xl flex justify-between items-end mx-auto">
           <p className="font-semibold text-lg">Write More</p>
-          <div>
-            <span className="mr-2">{writingsStreak} Day Streak</span>
-            <span className={wordCount >= dailyGoal ? 'text-green-500' : ''}>
+          <div className={wordCount >= dailyGoal ? 'text-green-500' : ''}>
+            <span className="mr-2">
+              <span className="font-semibold">{writingsStreak}</span> Day Streak</span>
+            <span>
               <span className="font-semibold">{wordCount}</span> Words
             </span>
           </div>
