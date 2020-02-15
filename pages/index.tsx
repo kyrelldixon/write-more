@@ -48,7 +48,12 @@ const IndexPage: NextPage = () => {
 
       let gotWritingForToday = true
       try {
-        const writing = await getWriting(settings.activeWritingId)
+        let writing = await getWriting(settings.activeWritingId)
+        // if it's the old writing, change it to the new one        
+        if (writing.dateCreated) {
+          const created = new Date(writing.dateCreated).toISOString()
+          writing = {id: writing.id, created, text: writing.text}
+        }
         if (!isToday(writing.created)) {
           throw new Error('writing not from today')
         }
