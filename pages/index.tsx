@@ -19,12 +19,11 @@ const Editor = dynamic(() => {
 const IndexPage: NextPage = () => {
   const [writingsStreak, setWritingsStreak] = useState(0)
   const [writingSettings, setWrittingSettings] = useState<WritingSettings>({ activeWritingId: '', dailyGoal: 750 })
-  const [dailyWriting, setDailyWriting] = useState<DailyWriting>({ id: uuid() ,text: '', created: Date.now() })
+  const [dailyWriting, setDailyWriting] = useState<DailyWriting>({ id: uuid() ,text: '', created: new Date().toISOString() })
   const [isPreviewMode, setIsPreviewMode] = useState(false)
   const togglePreviewMode = () => setIsPreviewMode(!isPreviewMode)
 
   useEffect(() => {
-    console.log({date: new Date().toISOString()})
     const init = async () => {
       let settings: WritingSettings = writingSettings
       try {

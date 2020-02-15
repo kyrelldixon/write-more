@@ -9,7 +9,7 @@ export const getWordCountFromMarkdown = (markdown: string) => {
   return wordCount
 }
 
-export const formatDate = (utcDate: number, short = false) => {
+export const formatDate = (utcDate: string, short = false) => {
   const date = new Date(utcDate)
   const options = 
     short ?
@@ -19,7 +19,7 @@ export const formatDate = (utcDate: number, short = false) => {
   return date.toLocaleDateString("en-US", options)
 }
 
-export const isToday = (someDate: number) => {
+export const isToday = (someDate: string) => {
   const today = new Date()
   const date = new Date(someDate)
   return date.getDate() == today.getDate() &&
@@ -36,7 +36,7 @@ export const getDaysInRow = (writings: DailyWriting[], goal: number) => {
 
   for (let i = writings.length - 1; i >= 0; i--) {
     const date = new Date(writings[i].created)
-    console.log(date.getDate(), currentDate.getDate())
+    console.log(date, currentDate.getDate())
     if (date.getDate() !== currentDate.getDate()) {
       break;
     }
@@ -46,7 +46,7 @@ export const getDaysInRow = (writings: DailyWriting[], goal: number) => {
       break;
     }
     streak += 1
-    currentDate = new Date(writings[i].created - 60 * 1000 * 60 * 24)
+    currentDate = new Date(date.getTime()  - 60 * 1000 * 60 * 24)
   }
 
   return streak
