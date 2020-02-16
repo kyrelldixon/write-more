@@ -29,7 +29,7 @@
     "@types/remove-markdown": "^0.1.1",
     "@types/uuid": "^3.4.7",
     "postcss-preset-env": "^6.7.0",
-    "tailwindcss": "^1.1.4",
+    "tailwindcss": "^1.2.0",
     "typescript": "3.7.3"
   },
   "license": "ISC"
