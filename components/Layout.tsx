@@ -9,7 +9,7 @@ const Layout: React.FunctionComponent<Props> = ({
   children,
   title = 'Write More',
 }) => (
-  <div className="text-gray-900">
+  <div className="text-gray-900 h-full">
     <Head>
       <title>{title}</title>
       <meta charSet="utf-8" />
