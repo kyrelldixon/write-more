@@ -5,6 +5,7 @@ import { DailyWriting } from '../types'
 
 import 'codemirror/mode/gfm/gfm'
 import 'codemirror/addon/display/placeholder'
+import 'codemirror/addon/edit/continuelist'
 
 // from https://github.com/taniarascia/takenote/blob/master/src/client/slices/settings.ts
 const codeMirrorOptions = {
