@@ -19,6 +19,7 @@ const Editor = dynamic(() => {
 }, { ssr: false })
 
 const AppPage: NextPage = () => {
+  const [writings, setWritings] = useState<DailyWriting[]>([])
   const [writingsStreak, setWritingsStreak] = useState(0)
   const [writingSettings, setWritingSettings] = useState<WritingSettings>({ activeWritingId: '', dailyGoal: 750 })
   const [dailyWriting, setDailyWriting] = useState<DailyWriting>({ id: uuid() ,text: '', created: new Date().toISOString() })
@@ -78,19 +79,26 @@ const AppPage: NextPage = () => {
       }
 
       const writings = await getWritings()
-      const streak = getDaysInRow(writings, writingSettings.dailyGoal)
-      setWritingsStreak(streak)
+      setWritings(writings)
     }
 
     init()
   }, [])
+
+  const wordCount = useLiveWordCount(dailyWriting.text)
+
+  useEffect(() => {
+    const newWritings = writings.map(writing => writing.id === dailyWriting.id ? dailyWriting : writing)
+    const streak = getDaysInRow(newWritings, writingSettings.dailyGoal)
+    setWritings(newWritings)
+    setWritingsStreak(streak)
+  }, [wordCount, writingSettings])
 
   const saveWriting = () => {
     patchWriting(dailyWriting)
     .catch(reason => console.error(`error saving writing ${reason}`))
   }
 
-  const wordCount = useLiveWordCount(dailyWriting.text)
   const { dailyGoal } = writingSettings
   const { saved, editValue } = useAutoSaveOnEdit(setDailyWriting, saveWriting)
 
