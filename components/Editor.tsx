@@ -2,6 +2,7 @@ import React from 'react'
 import { Controlled as CodeMirror } from 'react-codemirror2'
 
 import { DailyWriting } from '../types'
+import { createExtraKeys } from '../utils/codemirror';
 
 import 'codemirror/mode/gfm/gfm'
 import 'codemirror/addon/display/placeholder'
@@ -18,11 +19,11 @@ const codeMirrorOptions = {
   addModeClass: true,
   extraKeys: {
     "Enter": 'newlineAndIndentContinueMarkdownList',
+    ...createExtraKeys(),
   },
   lineNumbers: false,
   lineWrapping: true,
   viewportMargin: Infinity,
-  // keyMap: 'default',
   dragDrop: false,
   autoFocus: true,
   cursorHeight: 0.85,
